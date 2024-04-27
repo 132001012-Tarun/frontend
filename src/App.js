@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PersonalInformation from './PersonalInformation';
 import TechnicalSkills from './TechnicalSkills';
 import UploadSection from './uploadSection';
-import ReviewAndSubmit from './ReviewAndSubmit';
+import ReviewAndSubmit from './reviewAndSubmit';
 import {Stepper,StepLabel,Step} from '@mui/material'
 import {multiStepContext} from './stepContext';
 

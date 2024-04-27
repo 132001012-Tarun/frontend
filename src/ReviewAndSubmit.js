@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { multiStepContext } from './stepContext';
+import axios from 'axios';
 
 const ReviewAndSubmit = () => {
   const { userData ,setStep} = useContext(multiStepContext);
 
   // Destructure userData object
-  const { fullName, birthdate, email, phoneNumber, programmingLanguage, experienceLevel, developmentStack, interestedAreas, resume } = userData;
+  const { fullName, birthdate, email, phoneNumber, programmingLanguage, experienceLevel, developmentStack, interestedAreas} = userData;
 
   // Ensure that developmentStack and interestedAreas are arrays before calling join method
   const developmentStackString = developmentStack ? developmentStack.join(', ') : '';
@@ -17,10 +18,16 @@ const ReviewAndSubmit = () => {
     setStep(3);
   };
 
-  const onSubmit = () => {
-    // Handle submit functionality
-    console.log('Form submitted:', userData);
+  const onSubmit = async () => {
+    try {
+      const response = await axios.post('http://localhost:4000/user', userData);
+      console.log('User created:', response.data);
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
   };
+
+    
 
   return (
     <div>
@@ -36,11 +43,6 @@ const ReviewAndSubmit = () => {
       <p>Experience Level: {experienceLevel}</p>
       <p>Development Stack: {developmentStackString}</p>
       <p>Interested Areas: {interestedAreasString}</p>
-
-      <h3>Uploaded Resume:</h3>
-      <p>File Name: {resume ? resume.name : ''}</p>
-      <p>File Type: {resume ? resume.type : ''}</p>
-      <p>File Size: {resume ? resume.size : ''} bytes</p>
 
       {/* Edit and Submit buttons */}
       <button onClick={onEdit}>Edit</button>
