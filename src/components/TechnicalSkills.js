@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { multiStepContext } from './stepContext';
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, MenuItem, Select } from '@mui/material';
+import { multiStepContext } from '../context/stepContext';
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, MenuItem, Select, Typography } from '@mui/material';
 
 const TechnicalSkills = () => {
     const { setStep, userData ,setUserData } = useContext(multiStepContext);
@@ -60,9 +60,11 @@ const TechnicalSkills = () => {
     };
 
     return (
-        <div>
-            <h2>Technical Skills and Preferences</h2>
-            <FormControl>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Typography variant="h5" gutterBottom>
+                Technical Skills and Preferences
+            </Typography>
+            <FormControl fullWidth style={{ marginBottom: '1rem' }}>
                 <FormLabel>Primary Programming Language</FormLabel>
                 <Select
                     value={programmingLanguage}
@@ -77,8 +79,7 @@ const TechnicalSkills = () => {
                     <MenuItem value="Other">Other</MenuItem>
                 </Select>
             </FormControl>
-
-            <FormControl>
+            <FormControl fullWidth style={{ marginBottom: '1rem' }}>
                 <FormLabel>Experience Level</FormLabel>
                 <Select
                     value={experienceLevel}
@@ -92,10 +93,9 @@ const TechnicalSkills = () => {
                     <MenuItem value="Expert">Expert</MenuItem>
                 </Select>
             </FormControl>
-
-            <FormControl>
+            <FormControl fullWidth style={{ marginBottom: '1rem', textAlign: 'center' }}>
                 <FormLabel>Preferred Development Stack</FormLabel>
-                <FormGroup>
+                <FormGroup style={{ flexDirection: 'row' }}>
                     <FormControlLabel
                         control={<Checkbox checked={developmentStack.includes('MEAN')} onChange={handleDevelopmentStackChange} value="MEAN" />}
                         label="MEAN"
@@ -114,10 +114,9 @@ const TechnicalSkills = () => {
                     />
                 </FormGroup>
             </FormControl>
-
-            <FormControl>
+            <FormControl fullWidth style={{ marginBottom: '1rem', textAlign: 'center' }}>
                 <FormLabel>Interested Areas in Task Scheduling</FormLabel>
-                <FormGroup>
+                <FormGroup style={{ flexDirection: 'row' }}>
                     <FormControlLabel
                         control={<Checkbox checked={interestedAreas.includes('UI/UX Design')} onChange={handleInterestedAreasChange} value="UI/UX Design" />}
                         label="UI/UX Design"
@@ -138,16 +137,11 @@ const TechnicalSkills = () => {
                         control={<Checkbox checked={interestedAreas.includes('Real-Time Updates')} onChange={handleInterestedAreasChange} value="Real-Time Updates" />}
                         label="Real-Time Updates"
                     />
-                    
                 </FormGroup>
             </FormControl>
-
-            <div>
-                <Button variant="contained" onClick={handlePrevious} color="secondary">Previous</Button>
-                <Button variant="contained" onClick={handleNext} color="primary">Next</Button>
-            </div>
+            <Button variant="contained" onClick={handlePrevious} color="secondary" style={{ marginBottom: '1rem' }}>Previous</Button>
+            <Button variant="contained" onClick={handleNext} color="primary">Next</Button>
         </div>
     );
 };
-
 export default TechnicalSkills;

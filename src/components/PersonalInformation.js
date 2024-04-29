@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { multiStepContext } from './stepContext';
-import { Button, TextField } from '@mui/material';
+import { multiStepContext } from '../context/stepContext';
+import { Button, TextField, Typography, Grid } from '@mui/material';
+import { validateEmail, validatePhoneNumber } from  '../utils/PersonalInformationUtils'
 
 const PersonalInformation = () => {
   const { setStep, userData, setUserData } = useContext(multiStepContext);
-  const [fullName, setFullName] = useState(userData.fullName || ''); // Initialize state with userData values
-  const [birthdate, setBirthdate] = useState(userData.birthdate || ''); // Initialize state with userData values
-  const [email, setEmail] = useState(userData.email || ''); // Initialize state with userData values
-  const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber || ''); // Initialize state with userData values
+  const [fullName, setFullName] = useState(userData.fullName || '');
+  const [birthdate, setBirthdate] = useState(userData.birthdate || '');
+  const [email, setEmail] = useState(userData.email || '');
+  const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber || '');
 
-  // Update userData state whenever any input field changes
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
     setUserData({ ...userData, fullName: e.target.value });
@@ -31,91 +31,85 @@ const PersonalInformation = () => {
   };
 
   const handleNext = () => {
-    // Perform validation here if needed
-
-    // Basic validations
     if (!fullName || !birthdate || !email || !phoneNumber) {
       alert('Please fill in all fields.');
       return;
     }
 
-    // Validate email format
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
+    if (!validateEmail(email)) {
       alert('Please enter a valid email address.');
       return;
     }
 
-    // Validate phone number format
-    const phonePattern = /^[0-9]{10}$/;
-    if (!phonePattern.test(phoneNumber)) {
+    if (!validatePhoneNumber(phoneNumber)) {
       alert('Please enter a valid phone number (10 digits).');
       return;
     }
 
-    // Move to the next step if all validations pass
-    setStep(2); // Move to the next step
+    setStep(2);
   };
 
   return (
-    <div>
-      <div>
+    <Grid container spacing={2} alignItems="center" justify="center">
+      <Grid item xs={12} style={{ textAlign: 'center' }}>
+        <Typography variant="h5" gutterBottom>
+          Personal Information
+        </Typography>
+      </Grid>
+      <Grid item xs={12} sm={10} md={8} lg={6}>
         <TextField
           label="Full Name"
           value={fullName}
           onChange={handleFullNameChange}
-          margin="normal"
-          variant="outlined"
-          color="secondary"
+          fullWidth
           required
         />
-      </div>
-      <div>
+      </Grid>
+      <Grid item xs={12} sm={10} md={8} lg={6}>
         <TextField
           label="Birthdate"
           type="date"
           value={birthdate}
           onChange={handleBirthdateChange}
-          margin="normal"
-          variant="outlined"
-          color="secondary"
+          fullWidth
           required
           InputLabelProps={{
             shrink: true,
           }}
         />
-      </div>
-      <div>
+      </Grid>
+      <Grid item xs={12} sm={10} md={8} lg={6}>
         <TextField
           label="Email Address"
           type="email"
           value={email}
           onChange={handleEmailChange}
-          margin="normal"
-          variant="outlined"
-          color="secondary"
+          fullWidth
           required
         />
-      </div>
-      <div>
+      </Grid>
+      <Grid item xs={12} sm={10} md={8} lg={6}>
         <TextField
           label="Phone Number"
           type="tel"
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
-          margin="normal"
-          variant="outlined"
-          color="secondary"
+          fullWidth
           required
           pattern="[0-9]{10}"
         />
-      </div>
-      <div>
-        <Button variant="contained" onClick={handleNext} color="primary">
+      </Grid>
+      <Grid item xs={12} style={{ textAlign: 'center' }}>
+        <Button
+          variant="contained"
+          onClick={handleNext}
+          color="primary"
+          fullWidth
+        >
           Next
         </Button>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
